@@ -3,8 +3,6 @@
 public class PlayerLookScript : MonoBehaviour
 {
 
-	// BASED ON: https://drive.google.com/drive/folders/0B6SCkaV_VaTyaG1DZ2phOU1Yekk
-
 
 	public enum RotationAxis {
 		MouseX = 1,
