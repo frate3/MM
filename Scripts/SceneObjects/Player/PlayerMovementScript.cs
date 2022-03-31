@@ -1,22 +1,24 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class PlayerMovementScript : MonoBehaviour
-{
+public class PlayerMovementScript : MonoBehaviour{
 
-	// BASED ON: https://drive.google.com/drive/folders/0B6SCkaV_VaTyaG1DZ2phOU1Yekk
-
+	public float Health = 100f;
 
 	public float moveSpeed = 10.0f;
 	public float jumpSpeed = 4.0f;
 	public float gravity = 9.8f;
 	public float terminalVelocity = 100f;
+	public AudioSource source;
 
 	private CharacterController _charCont;
 	private Vector3 _moveDirection = Vector3.zero;
 
+	//checkpoint
+	public Vector3 checkpoint1 = new Vector3(40,4,-40);
 
 	void Start() {
 		_charCont = GetComponent<CharacterController>();
+		source = GetComponent<AudioSource>();
 	}
 
 	void Update() {
@@ -26,6 +28,9 @@ public class PlayerMovementScript : MonoBehaviour
 		} else {
 			HandlePlayerInactiveMove();
 		}
+		if (transform.position.y <= 2.3f){
+            transform.position = checkpoint1;
+        }
 	}
 
 	private void HandlePlayerMove() {
@@ -41,12 +46,13 @@ public class PlayerMovementScript : MonoBehaviour
 				_moveDirection.y = 0f;
 			}
 			// STUB: Handle movement processes, such as footsteps SFX
-			if(deltaX != 0 || deltaZ != 0) {
-				// Do handling here...
+			if (deltaX != 0 || deltaZ != 0) {
+				// source.Play();
 			}
 		} else {
 			// STUB: Handle movement stop processes, such as footsteps SFX
 			// Do handling here...
+
 		}
 		ApplyMovement();
 	}
@@ -66,5 +72,8 @@ public class PlayerMovementScript : MonoBehaviour
 		_charCont.Move(_moveDirection * Time.deltaTime);
 	}
 
-
+	void OnDrawGizmos(){
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(checkpoint1,new Vector3(1,1,1));
+    }
 }
